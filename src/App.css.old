@@ -1,0 +1,112 @@
+
+.App-title {
+	text-align: center;
+}
+
+
+.board {
+	text-align: center;
+	width: 604px;
+	height: 604px;
+	padding: 5px;
+	border-style: solid;
+	border-radius: 15px;
+	border-width: medium;
+	background-color: black;
+	display: inline-block;
+}
+
+.board-fill {
+	width: calc((100% - 604px) / 2);
+	display: inline-block;
+}
+
+
+
+.config {
+	text-align: center;
+	width: 406px;
+	border-style: solid;
+	border-radius: 15px;
+	border-width: medium;
+	display: inline-block;
+}
+
+.config-fill {
+	width: calc((100% - 406px) / 2);
+	display: inline-block;
+}
+
+.config-title {
+}
+
+.rad-div {
+	width: 176px;
+	font-size: 22pt;
+	display: inline-block;
+}
+
+.ch-div {
+	width: 400px;
+	font-size: 22pt;
+	display: inline-block;
+}
+
+.but-div {
+	width: 360px;
+	height: 38px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	font-size: 22pt;
+	border-style: solid;
+	border-radius: 15px;
+	border-width: medium;
+	border-color: black;
+	background-color: white;
+	display: inline-block;
+}
+
+.but-start-game {
+	width: 200px;
+	height: 50px;
+	border-style: solid;
+	border-radius: 15px;
+	border-width: medium;
+	font-size: 22pt;
+	
+}
+
+.config-boardsize {
+	text-align: center;
+	width: 360px;
+	height: 160px;
+	margin-left: 20px;
+	margin-right: 20px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	border-style: solid;
+	border-radius: 15px;
+	border-width: medium;
+	display: inline-block;
+	
+}
+
+.config-difficulty-vars {
+	text-align: center;
+	width: 360px;
+	height: 160px;
+	margin-left: 20px;
+	margin-right: 20px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	border-style: solid;
+	border-radius: 15px;
+	border-width: medium;
+	display: inline-block;
+	
+}
+
+.config-difficulty-checks {
+	text-align: left;
+	margin-left: 45px;
+}

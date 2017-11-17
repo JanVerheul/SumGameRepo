@@ -1,140 +1,55 @@
 
-// functions for computing cell connections 
+// functions for computing cell connections
 
 export const computeChangeDesc = (bsH, boardType, cellId, direction) => {
-	if (boardType === 'line1d') {
-		switch (direction) {
-			case 'WW': {
-				let res = [];
-				for (let i = 0; i < bsH; i++) {
-					if (i != cellId) {
-						res.push(i);
-					}
+	switch (direction) {
+		case 'MB': {
+			let res = [];
+			for (let i = 0; i < bsH; i++) {
+				if (i != cellId) {
+					res.push(i);
 				}
-				return { factor: -1, cells: res };
-			};
-			case 'EE': {
-				let res = [];
-				for (let i = 0; i < bsH; i++) {
-					if (i != cellId) {
-						res.push(i);
-					}
+			}
+			return { factor: -1, order: 'B', cells: res };
+		};
+		case 'PB': {
+			let res = [];
+			for (let i = 0; i < bsH; i++) {
+				if (i != cellId) {
+					res.push(i);
 				}
-				return { factor: 1, cells: res };
-			};
-			default: {
-				return { factor: 0, cells: [] };
-			};
-		}
-	}
-	else if (boardType === 'line2d') {
-		switch (direction) {
-			case 'NW': {
-				return { factor: 1, cells: computeChangeDescNW(bsH, cellId) };
 			}
-			case 'NN': {
-				return { factor: 1, cells: computeChangeDescNN(bsH, cellId) };
+			return { factor: 1, order: 'B', cells: res };
+		};
+		case 'MA': {
+			let res = [];
+			for (let i = 0; i < bsH; i++) {
+				if (i != cellId) {
+					res.push(i);
+				}
 			}
-			case 'NE': {
-				return { factor: 1, cells: computeChangeDescNE(bsH, cellId) };
+			return { factor: -1, order: 'A', cells: res };
+		};
+		case 'PA': {
+			let res = [];
+			for (let i = 0; i < bsH; i++) {
+				if (i != cellId) {
+					res.push(i);
+				}
 			}
-			case 'EE': {
-				return { factor: 1, cells: computeChangeDescEE(bsH, cellId) };
-			}
-			case 'SE': {
-				return { factor: -1, cells: computeChangeDescNW(bsH, cellId) };
-			}
-			case 'SS': {
-				return { factor: -1, cells: computeChangeDescNN(bsH, cellId) };
-			}
-			case 'SW': {
-				return { factor: -1, cells: computeChangeDescNE(bsH, cellId) };
-			}
-			case 'WW': {
-				return { factor: -1, cells: computeChangeDescEE(bsH, cellId) };
-			}
-			default: {
-				return { factor: 0, cells: [] };
-			}
-		}
-	}
-	else {
-		switch (direction) {
-			case 'NE': {
-				return { factor: 1, cells: computeChangeDescNE(bsH, cellId).concat(computeChangeDescNW(bsH, cellId)) };
-			}
-			case 'EE': {
-				return { factor: 1, cells: computeChangeDescEE(bsH, cellId).concat(computeChangeDescNN(bsH, cellId)) };
-			}
-			case 'SW': {
-				return { factor: -1, cells: computeChangeDescNE(bsH, cellId).concat(computeChangeDescNW(bsH, cellId)) };
-			}
-			case 'WW': {
-				return { factor: -1, cells: computeChangeDescEE(bsH, cellId).concat(computeChangeDescNN(bsH, cellId)) };
-			}
-			default: {
-				return { factor: 0, cells: [] };
-			}
-		}
+			return { factor: 1, order: 'A', cells: res };
+		};
+		default: {
+			return { factor: 0, order: '', cells: [] };
+		};
 	}
 };
-
-const computeChangeDescNW = (mod, cellId) => {
-	let coor = transLin2Coor(cellId, mod);
-	let res = [];
-	for (let i = 1; i < mod; i++) {
-		res.push(transCoor2Lin({ h: coor.h + i, v: coor.v + i }, mod));
-	}
-	return res;
-}
-
-const computeChangeDescNN = (mod, cellId) => {
-	let coor = transLin2Coor(cellId, mod);
-	let res = [];
-	for (let i = 1; i < mod; i++) {
-		res.push(transCoor2Lin({ h: coor.h, v: coor.v + i }, mod));
-	}
-	return res;
-}
-
-const computeChangeDescNE = (mod, cellId) => {
-	let coor = transLin2Coor(cellId, mod);
-	let res = [];
-	for (let i = 1; i < mod; i++) {
-		res.push(transCoor2Lin({ h: coor.h - i, v: coor.v + i }, mod));
-	}
-	return res;
-}
-
-const computeChangeDescEE = (mod, cellId) => {
-	let coor = transLin2Coor(cellId, mod);
-	let res = [];
-	for (let i = 1; i < mod; i++) {
-		res.push(transCoor2Lin({ h: coor.h + i, v: coor.v }, mod));
-	}
-	return res;
-}
-
-const transLin2Coor = (index, mod) => {
-	// method assumes index >= 0 
-	const h = index % mod;
-	index = index - h;
-	const v = index / mod;
-	return { h: h, v: v };
-};
-
-const transCoor2Lin = (pair, mod) => {
-	const hh = (pair.h < 0 ? pair.h + mod : pair.h % mod);
-	const vv = (pair.v < 0 ? pair.v + mod : pair.v % mod);
-	return hh + vv * mod;
-}
-
 
 // functions for generating cell content
 
 const generateCellNumber = () => (Math.floor((Math.random() * 20) - 5));
 
-export const generateCellsY = (number) => {
+export const generateCells = (number) => {
 	let res = [];
 	for (let i = 0; i < number; i++) {
 		res.push(generateCellNumber());
@@ -146,11 +61,11 @@ export const generateCellsX = (number) => {
 	return [8, 5, 2, 6];
 }
 
-export const generateCells = (number) => {
+export const generateCellsY = (number) => {
 	return [100, 100, 100];
 }
 
-// general utility functions 
+// general utility functions
 
 export const formatPlayingTime = (numSeconds) => {
 	const seconds = numSeconds % 60;
@@ -181,125 +96,37 @@ const twoPos = (num) => (num < 10 ? '0' + num : num);
 // functions for calculating hints
 
 export const calcHint = (cells, mod, boardType) => {
-	
+
 	if (allOne(cells)) { // alle cellen bevatten 1
 		if (boardType === 'line1d') {
-			return { index: randSel(getIndexesAll(cells)), direction: 'WW' };
+			return { index: randSel(getIndexesAll(cells)), direction: 'MB' };
 		}
-		
+
 	}
 	if (allZeroOne(cells)) { // alle cellen bevatten 0 of 1
 		if (boardType === 'line1d') {
-			return { index: randSel(getIndexesZeroes(cells)), direction: 'EE' };
+			return { index: randSel(getIndexesZeroes(cells)), direction: 'PB' };
 		}
-		
+
 	}
 	if (nonePositive(cells)) { // alle cellen bevatten waarden kleiner dan 0
 		if (boardType === 'line1d') {
-			return { index: randSel(getIndexesLowest(cells)), direction: 'WW' };
-		}
-		if (boardType === 'line2d') {
-			const indexes = getIndexesLowest(cells);
-			const resultOptions = [];
-			for (let i = 0; i < indexes.length; i++) {
-				const index = indexes[i];
-				resultOptions.push({ value: countNegatives(cells, computeChangeDescNW(mod, index)), hint: { index: index, direction: 'SE'}})
-				resultOptions.push({ value: countNegatives(cells, computeChangeDescNN(mod, index)), hint: { index: index, direction: 'SS'}})
-				resultOptions.push({ value: countNegatives(cells, computeChangeDescNE(mod, index)), hint: { index: index, direction: 'SW'}})
-				resultOptions.push({ value: countNegatives(cells, computeChangeDescEE(mod, index)), hint: { index: index, direction: 'WW'}})
-			}
-			return randSel(getMaximalHint(resultOptions));
-		}
-		if (boardType === 'cross2d') {
-			const indexes = getIndexesLowest(cells);
-			const resultOptions = [];
-			for (let i = 0; i < indexes.length; i++) {
-				const index = indexes[i];
-				resultOptions.push({ value: countNegatives(cells, computeChangeDescNE(mod, index).concat(computeChangeDescNW(mod, index))), hint: { index: index, direction: 'SW'}})
-				resultOptions.push({ value: countNegatives(cells, computeChangeDescEE(mod, index).concat(computeChangeDescNN(mod, index))), hint: { index: index, direction: 'WW'}})
-			}
-			return randSel(getMaximalHint(resultOptions));
+			return { index: randSel(getIndexesLowest(cells)), direction: 'MB' };
 		}
 	}
 	if (allPositive(cells)) { // alle cellen bevatten waarde groter dan 0
 		if (boardType === 'line1d') {
-			return { index: randSel(getIndexesLowest(cells)), direction: 'WW' };
-		}
-		if (boardType === 'line2d') {
-			const indexes = getIndexesLowest(cells);
-			const resultOptions = [];
-			for (let i = 0; i < indexes.length; i++) {
-				const index = indexes[i];
-				resultOptions.push({ value: getMinimum(cells, computeChangeDescNW(mod, index)), hint: { index: index, direction: 'SE'}})
-				resultOptions.push({ value: getMinimum(cells, computeChangeDescNN(mod, index)), hint: { index: index, direction: 'SS'}})
-				resultOptions.push({ value: getMinimum(cells, computeChangeDescNE(mod, index)), hint: { index: index, direction: 'SW'}})
-				resultOptions.push({ value: getMinimum(cells, computeChangeDescEE(mod, index)), hint: { index: index, direction: 'WW'}})
-			}
-			return randSel(getMaximalHint(resultOptions));
-		}
-		if (boardType === 'cross2d') {
-			const indexes = getIndexesLowest(cells);
-			const resultOptions = [];
-			for (let i = 0; i < indexes.length; i++) {
-				const index = indexes[i];
-				resultOptions.push({ value: getMinimum(cells, computeChangeDescNE(mod, index).concat(computeChangeDescNW(mod, index))), hint: { index: index, direction: 'SW'}})
-				resultOptions.push({ value: getMinimum(cells, computeChangeDescEE(mod, index).concat(computeChangeDescNN(mod, index))), hint: { index: index, direction: 'WW'}})
-			}
-			return randSel(getMaximalHint(resultOptions));
+			return { index: randSel(getIndexesLowest(cells)), direction: 'MB' };
 		}
 	}
 	if (noneNegative(cells)) { // alle cellen bevatten waarde groter dan of gelijk aan 0; tenminste 1 cell bevat 0
 		if (boardType === 'line1d') {
-			return { index: randSel(getIndexesHighest(cells)), direction: 'EE' };
-		}
-		if (boardType === 'line2d') {
-			const indexes = getIndexesHighest(cells);
-			const resultOptions = [];
-			for (let i = 0; i < indexes.length; i++) {
-				const index = indexes[i];
-				resultOptions.push({ value: countZeroes(cells, computeChangeDescNW(mod, index)), hint: { index: index, direction: 'NW'}})
-				resultOptions.push({ value: countZeroes(cells, computeChangeDescNN(mod, index)), hint: { index: index, direction: 'NN'}})
-				resultOptions.push({ value: countZeroes(cells, computeChangeDescNE(mod, index)), hint: { index: index, direction: 'NE'}})
-				resultOptions.push({ value: countZeroes(cells, computeChangeDescEE(mod, index)), hint: { index: index, direction: 'EE'}})
-			}
-			return randSel(getMaximalHint(resultOptions));
-		}
-		if (boardType === 'cross2d') {
-			const indexes = getIndexesHighest(cells);
-			const resultOptions = [];
-			for (let i = 0; i < indexes.length; i++) {
-				const index = indexes[i];
-				resultOptions.push({ value: countZeroes(cells, computeChangeDescNE(mod, index).concat(computeChangeDescNW(mod, index))), hint: { index: index, direction: 'NE'}})
-				resultOptions.push({ value: countZeroes(cells, computeChangeDescEE(mod, index).concat(computeChangeDescNN(mod, index))), hint: { index: index, direction: 'EE'}})
-			}
-			return randSel(getMaximalHint(resultOptions));
+			return { index: randSel(getIndexesHighest(cells)), direction: 'PB' };
 		}
 	}
 	if (true) { // er zijn cellen met waarde kleiner dan nul en er zijn cellen met waarde groter dan nul
 		if (boardType === 'line1d') {
-			return { index: randSel(getIndexesHighest(cells)), direction: 'EE' };
-		}
-		if (boardType === 'line2d') {
-			const indexes = getIndexesPositive(cells);
-			const resultOptions = [];
-			for (let i = 0; i < indexes.length; i++) {
-				const index = indexes[i];
-				resultOptions.push({ value: countNegatives(cells, computeChangeDescNW(mod, index)), hint: { index: index, direction: 'NW'}})
-				resultOptions.push({ value: countNegatives(cells, computeChangeDescNN(mod, index)), hint: { index: index, direction: 'NN'}})
-				resultOptions.push({ value: countNegatives(cells, computeChangeDescNE(mod, index)), hint: { index: index, direction: 'NE'}})
-				resultOptions.push({ value: countNegatives(cells, computeChangeDescEE(mod, index)), hint: { index: index, direction: 'EE'}})
-			}	
-			return randSel(getMaximalHint(resultOptions));
-		}
-		if (boardType === 'cross2d') {
-			const indexes = getIndexesPositive(cells);
-			const resultOptions = [];
-			for (let i = 0; i < indexes.length; i++) {
-				const index = indexes[i];
-				resultOptions.push({ value: countNegatives(cells, computeChangeDescNE(mod, index).concat(computeChangeDescNW(mod, index))), hint: { index: index, direction: 'NE'}})
-				resultOptions.push({ value: countNegatives(cells, computeChangeDescEE(mod, index).concat(computeChangeDescNN(mod, index))), hint: { index: index, direction: 'EE'}})
-			}		
-			return randSel(getMaximalHint(resultOptions));
+			return { index: randSel(getIndexesHighest(cells)), direction: 'PB' };
 		}
 	}
 };
@@ -413,20 +240,3 @@ const randSel = (lst) => {
 	const index = Math.floor(Math.random() * lst.length);
 	return lst[index];
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	

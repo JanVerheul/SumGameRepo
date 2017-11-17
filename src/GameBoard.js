@@ -9,13 +9,13 @@ import './App.css';
 class GameBoard extends React.Component {
 
 	state = { cells: [], numMoves: 0, playingTime: 0, gameOver: false, inverseCalculations: false, hint: {} };
-	
+
 	componentDidMount = () => (this.startNewGame());
-	
+
 	componentWillUnmount = () => (clearInterval(this.timerInterval));
-	
+
 	handleClockTick = () => (this.setState({ playingTime: this.state.playingTime + 1 }));
-	
+
 	handleSumCommand = (cellIndex, direction) => {
 		const boardProps = this.props.boardProperties;
 		const boardConfig = this.props.boardConfig;
@@ -27,7 +27,7 @@ class GameBoard extends React.Component {
 		const numToChange = changeDesc.cells.length;
 		nextCells[cellIndex] = newVal;
 		for (let i = 0; i < numToChange; i++) {
-			const nextValue = nextCells[changeDesc.cells[i]] + (this.state.inverseCalculations ? newVal : oldVal) * changeDesc.factor;
+			const nextValue = nextCells[changeDesc.cells[i]] + (changeDesc.order === 'A' ? newVal : oldVal) * changeDesc.factor;
 			nextCells[changeDesc.cells[i]] = nextValue;
 		}
 		const hint = (boardConfig.playingHints ? Util.calcHint(nextCells, boardProps.bsH, boardProps.boardType) : {});
@@ -42,14 +42,14 @@ class GameBoard extends React.Component {
 			this.setState({ gameOver: true });
 		}
 	}
-	
+
 	handleAnotherGame = () => {
 		this.props.onRestartGame({});
 		this.startNewGame();
 	};
-	
+
 	handleADifferentGame = () => { this.props.onConfigGame({}); };
-	
+
 	handleRegisterScore = () => { this.props.onGameOver({ numMoves: this.state.numMoves, playingTime: this.state.playingTime }); };
 
 	startNewGame = () => {
@@ -60,11 +60,11 @@ class GameBoard extends React.Component {
 		this.setState({ cells: cells, numMoves: 0, playingTime: 0, gameOver: false, hint: hint });
 		this.timerInterval = setInterval(() => this.handleClockTick(), 1000);
 	};
-	
+
 	handleChangeInverse = (val) => {
 		this.setState({ inverseCalculations: val })
 	};
-	
+
 	render() {
 		const boardProps = this.props.boardProperties;
 		const boardConfig = this.props.boardConfig;
@@ -116,4 +116,3 @@ class GameBoard extends React.Component {
 }
 
 export default GameBoard;
-

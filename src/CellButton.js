@@ -1,3 +1,4 @@
+
 import React, { Component } from 'react';
 import './App.css';
 
@@ -8,12 +9,12 @@ class GameCell extends React.Component {
 	handleClick = () => (this.props.active ? this.props.handleClick() : null);
 
 	handleMouseEnter = () => (this.setState({ hover: true }));
-	
+
 	handleMouseLeave = () => (this.setState({ hover: false }));
 
 	render() {
 		const cbutParent = {
-			width: 46,
+			width: 69,
 			height: 46,
 			margin: 5,
 			paddingTop: 8,

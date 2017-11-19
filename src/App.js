@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 
-import './App.css';
 import './semantic-dist/semantic.css';
 
 import GameBoard from './GameBoard';
@@ -8,11 +7,14 @@ import GameConfig from './GameConfig';
 import GameRoot from './GameRoot';
 
 class App extends Component {
+	headerStyle = {
+		textAlign: 'center'
+	};
 	render() {
 		return (
 			<div className="App">
-				<header className="App-header">
-					<h1 className="App-title">Connected Sums Game</h1>
+				<header style={this.headerStyle} >
+					<h1>Connected Sums Game</h1>
 				</header>
 				<GameRoot />
 			</div>

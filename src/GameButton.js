@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import './App.css';
 
 class GameButton extends React.Component {
 
@@ -8,11 +7,11 @@ class GameButton extends React.Component {
 	onMouseEnter = () => {
 		this.setState({ hover: true });
 	}
-	
+
 	onMouseLeave = () => {
 		this.setState({ hover: false });
 	}
-	
+
 	render() {
 		const buttonParentStyle = {
 			width: this.props.width,

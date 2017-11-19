@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import BlackCadre from './BlackCadre';
 import GameButton from './GameButton';
-import './App.css';
 
 class NameForm extends React.Component {
 	onDoneButtonClick = (evt) => {

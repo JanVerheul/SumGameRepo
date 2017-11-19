@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
-import './App.css';
 import GameButton from './GameButton';
 import BlackCadre from './BlackCadre';
-import RestrictedMoves from './RestrictedMoves';
-// kan later weg:
-import * as Util from './Util';
+import RestrictedMovesDialog from './RestrictedMovesDialog';
 
 class GameConfig extends React.Component {
 
@@ -152,7 +149,7 @@ class GameConfig extends React.Component {
 									<input type='checkbox' name='ch-restricted-moves' value={this.state.restrictedMoves} onChange={this.onChangeChGp} />
 									<label><b>&nbsp; Restricted Moves</b></label>
 								</div>
-								{ ( this.state.restrictedMoves ? <RestrictedMoves /> : <span /> ) }
+								{ ( this.state.restrictedMoves ? <RestrictedMovesDialog /> : <span /> ) }
 							</div>
 						</BlackCadre>
 						<div style={hSeparatorStyle} />

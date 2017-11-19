@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import BlackCadre from './BlackCadre';
-import './App.css';
 import * as Util from './Util';
-import HallOfFameCell from './HallOfFameCell';
+import HallOfFameDialog from './HallOfFameDialog';
 
 class HallOfFame extends React.Component {
 
@@ -11,11 +10,11 @@ class HallOfFame extends React.Component {
 	sortMoves = () => {
 		this.setState({ order: 'moves' });
 	};
-	
+
 	sortTime = () => {
 		this.setState({ order: 'time' });
 	};
-	
+
 	compFunc = (elem1, elem2) => {
 		if (this.state.order === 'moves') {
 			if (elem1.moves - elem2.moves < 0) {
@@ -72,7 +71,7 @@ class HallOfFame extends React.Component {
 			}
 		}
 	}
-	
+
 	render() {
 		const rootStyle = {
 			textAlign: 'center',
@@ -141,7 +140,7 @@ class HallOfFame extends React.Component {
 								{entries}
 							</tbody>
 						</table>
-						<HallOfFameCell anotherGame={this.props.anotherGame} differentGame={this.props.differentGame} sortMoves={this.sortMoves} sortTime={this.sortTime} />
+						<HallOfFameDialog anotherGame={this.props.anotherGame} differentGame={this.props.differentGame} sortMoves={this.sortMoves} sortTime={this.sortTime} />
 					</div>
 				</BlackCadre>
 			</div>

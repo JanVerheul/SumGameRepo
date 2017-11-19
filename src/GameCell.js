@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import './App.css';
 import CellButton from './CellButton';
 
 class GameCell extends React.Component {

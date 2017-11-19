@@ -32,21 +32,12 @@ export const computeChangeDesc = (bsH, bsV, cellId, direction) => {
 const generateCellNumber = ({ lb, ub }) => ((lb == ub ? lb : lb + Math.floor(Math.random() * (ub - lb + 1))));
 
 export const generateCells = (number, valuePool) => {
-console.log('VALUE POOL: ' + JSON.stringify(valuePool));
 	let res = [];
 	for (let i = 0; i < number; i++) {
 		res.push(generateCellNumber(valuePool));
 	}
 	return res;
 };
-
-export const generateCellsX = (number) => {
-	return [8, 5, 2, 6];
-}
-
-export const generateCellsY = (number) => {
-	return [100, 100, 100];
-}
 
 // general utility functions
 

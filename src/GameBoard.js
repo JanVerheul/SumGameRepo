@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
 import GameCell from './GameCell';
 import ScoreCell from './ScoreCell';
-import DialogCell from './DialogCell';
-import GameOverCell from './GameOverCell';
+import GameOverDialog from './GameOverDialog';
 import * as Util from './Util';
-import './App.css';
 
 class GameBoard extends React.Component {
 
@@ -98,12 +96,9 @@ class GameBoard extends React.Component {
 		));
 		cellComponents.push(<ScoreCell title='Moves:' score={this.state.numMoves} />);
 		cellComponents.push(<ScoreCell title='Time:' score={Util.formatPlayingTime(this.state.playingTime)} />);
-		if (boardConfig.inverseCalculationsDialog) {
-			cellComponents.push(<DialogCell title='Inverse:' handleChangeInverse={this.handleChangeInverse} />);
-		}
 		if (this.state.gameOver) {
 			cellComponents.push(<br/>);
-			cellComponents.push(<GameOverCell anotherGame={this.handleAnotherGame} aDifferentGame={this.handleADifferentGame} registerScore={this.handleRegisterScore} />)
+			cellComponents.push(<GameOverDialog anotherGame={this.handleAnotherGame} aDifferentGame={this.handleADifferentGame} registerScore={this.handleRegisterScore} />)
 		}
 		return (
 			<div style={boardRootStyle} >

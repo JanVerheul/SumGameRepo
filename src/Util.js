@@ -1,42 +1,24 @@
 
 // functions for computing cell connections
 
-export const computeChangeDesc = (bsH, boardType, cellId, direction) => {
+export const computeChangeDesc = (bsH, bsV, cellId, direction) => {
+	let res = [];
+	for (let i = 0; i < bsH * bsV; i++) {
+		if (i != cellId) {
+			res.push(i);
+		}
+	}
 	switch (direction) {
 		case 'MB': {
-			let res = [];
-			for (let i = 0; i < bsH; i++) {
-				if (i != cellId) {
-					res.push(i);
-				}
-			}
 			return { factor: -1, order: 'B', cells: res };
 		};
 		case 'PB': {
-			let res = [];
-			for (let i = 0; i < bsH; i++) {
-				if (i != cellId) {
-					res.push(i);
-				}
-			}
 			return { factor: 1, order: 'B', cells: res };
 		};
 		case 'MA': {
-			let res = [];
-			for (let i = 0; i < bsH; i++) {
-				if (i != cellId) {
-					res.push(i);
-				}
-			}
 			return { factor: -1, order: 'A', cells: res };
 		};
 		case 'PA': {
-			let res = [];
-			for (let i = 0; i < bsH; i++) {
-				if (i != cellId) {
-					res.push(i);
-				}
-			}
 			return { factor: 1, order: 'A', cells: res };
 		};
 		default: {
@@ -47,12 +29,13 @@ export const computeChangeDesc = (bsH, boardType, cellId, direction) => {
 
 // functions for generating cell content
 
-const generateCellNumber = () => (Math.floor((Math.random() * 20) - 5));
+const generateCellNumber = ({ lb, ub }) => ((lb == ub ? lb : lb + Math.floor(Math.random() * (ub - lb + 1))));
 
-export const generateCells = (number) => {
+export const generateCells = (number, valuePool) => {
+console.log('VALUE POOL: ' + JSON.stringify(valuePool));
 	let res = [];
 	for (let i = 0; i < number; i++) {
-		res.push(generateCellNumber());
+		res.push(generateCellNumber(valuePool));
 	}
 	return res;
 };

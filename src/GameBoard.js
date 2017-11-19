@@ -21,7 +21,7 @@ class GameBoard extends React.Component {
 		const boardConfig = this.props.boardConfig;
 		const boardSize = this.props.boardSize;
 		const nextCells = JSON.parse(JSON.stringify(this.state.cells));
-		const changeDesc = Util.computeChangeDesc(boardProps.bsH, boardProps.boardType, cellIndex, direction);
+		const changeDesc = Util.computeChangeDesc(boardProps.bsH, boardProps.bsV, cellIndex, direction);
 		const oldVal = nextCells[cellIndex];
 		const newVal = oldVal + changeDesc.factor;
 		const numToChange = changeDesc.cells.length;
@@ -55,7 +55,7 @@ class GameBoard extends React.Component {
 	startNewGame = () => {
 		const boardProps = this.props.boardProperties;
 		const boardConfig = this.props.boardConfig;
-		const cells = Util.generateCells(boardProps.bsH * boardProps.bsV)
+		const cells = Util.generateCells(boardProps.bsH * boardProps.bsV, boardConfig.valuePool);
 		const hint = (boardConfig.playingHints ? Util.calcHint(cells, boardProps.bsH, boardProps.boardType) : {});
 		this.setState({ cells: cells, numMoves: 0, playingTime: 0, gameOver: false, hint: hint });
 		this.timerInterval = setInterval(() => this.handleClockTick(), 1000);

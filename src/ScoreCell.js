@@ -22,7 +22,7 @@ class ScoreCell extends React.Component {
 			margin: 5,
 			padding: 5,
 			borderStyle: 'solid',
-			borderRadius: 15,
+			borderRadius: 10,
 			borderWidth: 'medium',
 			display: 'inline-block',
 			backgroundColor: 'red'

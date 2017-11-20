@@ -79,6 +79,8 @@ class GameRoot extends React.Component {
 			playingHints: this.state.playingHints,
 			noNegatives: this.state.noNegatives,
 			restrictedMoves: this.state.restrictedMoves,
+			addInc: this.state.addInc,
+			subDec: this.state.subDec,
 			valuePool: this.mapValuePool(this.state.valuePool)
 		};
 	};

@@ -22,7 +22,7 @@ class GameButton extends React.Component {
 			marginRight: 5,
 			fontSize: '20pt',
 			borderStyle: 'solid',
-			borderRadius: 10,
+			borderRadius: (this.props.radius ? this.props.radius : 5),
 			borderWidth: 'medium',
 			borderColor: 'black',
 			display: 'inline-block'

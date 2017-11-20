@@ -46,23 +46,23 @@ class GameCell extends React.Component {
 			margin: 5,
 			padding: 5,
 			borderStyle: 'solid',
-			borderRadius: 15,
+			borderRadius: 10,
 			borderWidth: 'medium',
 			display: 'inline-block',
 			backgroundColor: (this.props.valueColors ? backGroundColor : 'red')
 		}
 		const type = this.props.type;
-		const activeAllTypes = this.props.gameOver == false;
-		const activeLine2D = this.props.gameOver == false && type === 'line2d';
-		const activeAll2D = this.props.gameover == false && (type === 'line2d' || type === 'cross2d');
-
+		const activePb = this.props.gameOver == false && (!this.props.restrictedMoves || this.props.addInc);
+		const activePa = this.props.gameOver == false && (!this.props.restrictedMoves || !this.props.addInc);
+		const activeMb = this.props.gameOver == false && (!this.props.restrictedMoves || this.props.subDec);
+		const activeMa = this.props.gameOver == false && (!this.props.restrictedMoves || !this.props.subDec);
 		return (
 			<div style={cellStyle} >
-				<CellButton hint={hint === 'PB'} active={activeAllTypes} handleClick={this.handleClick('PB')} >+</CellButton>
-				<CellButton hint={hint === 'PA'} active={activeAllTypes} handleClick={this.handleClick('PA')}>+</CellButton>
+				<CellButton hint={hint === 'PB'} active={activePb} handleClick={this.handleClick('PB')} >+</CellButton>
+				<CellButton hint={hint === 'PA'} active={activePa} handleClick={this.handleClick('PA')}>+</CellButton>
 				<div style={cdatStyle}>{this.props.value}</div>
-				<CellButton hint={hint === 'MB'} active={activeAllTypes} handleClick={this.handleClick('MB')}>-</CellButton>
-				<CellButton hint={hint === 'MA'} active={activeAllTypes} handleClick={this.handleClick('MA')}>-</CellButton>
+				<CellButton hint={hint === 'MB'} active={activeMb} handleClick={this.handleClick('MB')}>-</CellButton>
+				<CellButton hint={hint === 'MA'} active={activeMa} handleClick={this.handleClick('MA')}>-</CellButton>
 			</div>
 		);
 	}

@@ -72,7 +72,7 @@ class GameConfig extends React.Component {
 			width: 246,
 			fontSize: 22,
 			textAlign: 'left',
-			marginLeft: 40,
+			marginLeft: 30,
 			display: 'inline-block'
 		};
 		const configDifficultyChecksStyle = {
@@ -149,29 +149,13 @@ class GameConfig extends React.Component {
 									<input type='checkbox' name='ch-restricted-moves' value={this.state.restrictedMoves} onChange={this.onChangeChGp} />
 									<label><b>&nbsp; Restricted Moves</b></label>
 								</div>
-								{ ( this.state.restrictedMoves ? <RestrictedMovesDialog /> : <span /> ) }
+								{ ( this.state.restrictedMoves ? <RestrictedMovesDialog handleRestrictedMoves={this.handleRestrictedMoves}/> : <span /> ) }
 							</div>
 						</BlackCadre>
 						<div style={hSeparatorStyle} />
 						<BlackCadre width={350} borderWidth={15} padding={10} title='Value Pool' >
 						<div>
 							<div style={hSeparatorStyle} />
-							<div style={radVpStyle} >
-								<input id='radRand1_10' type='radio' name='rg-vp' value={this.state.valuePool === 'radRand1_10'} onChange={this.onChangeRadVp} />
-								<label><b>&nbsp; Random 1...10</b></label>
-							</div>
-							<div style={radVpStyle} >
-								<input id='radRand-10_10' type='radio' name='rg-vp' value={this.state.valuePool === 'radRand-10_10'} onChange={this.onChangeRadVp} />
-								<label><b>&nbsp; Random -10...10</b></label>
-							</div>
-							<div style={radVpStyle} >
-								<input id='radRand-100_100' type='radio' name='rg-vp' value={this.state.valuePool === 'radRand-100_100'} onChange={this.onChangeRadVp} />
-								<label><b>&nbsp; Random -100...100</b></label>
-							</div>
-							<div style={radVpStyle} >
-								<input id='radRand-1000_1000' type='radio' name='rg-vp' value={this.state.valuePool === 'radRand-1000_1000'} onChange={this.onChangeRadVp} />
-								<label><b>&nbsp; Random -1000...1000</b></label>
-							</div>
 							<div style={radVpStyle} >
 								<input id='radFixed10' type='radio' name='rg-vp' value={this.state.valuePool === 'radFixed10'} onChange={this.onChangeRadVp} />
 								<label><b>&nbsp; Fixed 10</b></label>
@@ -188,10 +172,26 @@ class GameConfig extends React.Component {
 								<input id='radFixed10000' type='radio' name='rg-vp' value={this.state.valuePool === 'radFixed10000'} onChange={this.onChangeRadVp} />
 								<label><b>&nbsp; Fixed 10000</b></label>
 							</div>
+							<div style={radVpStyle} >
+								<input id='radRand1_10' type='radio' name='rg-vp' value={this.state.valuePool === 'radRand1_10'} onChange={this.onChangeRadVp} />
+								<label><b>&nbsp; Random 1...10</b></label>
+							</div>
+							<div style={radVpStyle} >
+								<input id='radRand-10_10' type='radio' name='rg-vp' value={this.state.valuePool === 'radRand-10_10'} onChange={this.onChangeRadVp} />
+								<label><b>&nbsp; Random -10...10</b></label>
+							</div>
+							<div style={radVpStyle} >
+								<input id='radRand-100_100' type='radio' name='rg-vp' value={this.state.valuePool === 'radRand-100_100'} onChange={this.onChangeRadVp} />
+								<label><b>&nbsp; Random -100...100</b></label>
+							</div>
+							<div style={radVpStyle} >
+								<input id='radRand-1000_1000' type='radio' name='rg-vp' value={this.state.valuePool === 'radRand-1000_1000'} onChange={this.onChangeRadVp} />
+								<label><b>&nbsp; Random -1000...1000</b></label>
+							</div>
 						</div>
 						</BlackCadre>
 						<div style={hSeparatorStyle} />
-						<GameButton click={this.onStartGame} width={350}>Start Game</GameButton>
+						<GameButton click={this.onStartGame} width={350} radius={10}>Start Game</GameButton>
 					</div>
 				</BlackCadre>
 			</div>

@@ -6,7 +6,7 @@ import * as Util from './Util';
 
 class GameBoard extends React.Component {
 
-	state = { cells: [], numMoves: 0, playingTime: 0, gameOver: false, inverseCalculations: false, hint: {} };
+	state = { cells: [], numMoves: 0, playingTime: 0, gameOver: false, hint: {} };
 
 	componentDidMount = () => (this.startNewGame());
 
@@ -46,7 +46,7 @@ class GameBoard extends React.Component {
 		this.startNewGame();
 	};
 
-	handleADifferentGame = () => { this.props.onConfigGame({}); };
+	handleDifferentGame = () => { this.props.onConfigGame({}); };
 
 	handleRegisterScore = () => { this.props.onGameOver({ numMoves: this.state.numMoves, playingTime: this.state.playingTime }); };
 
@@ -66,6 +66,7 @@ class GameBoard extends React.Component {
 	render() {
 		const boardProps = this.props.boardProperties;
 		const boardConfig = this.props.boardConfig;
+console.log('BOARD CONFIG: ' + JSON.stringify(boardConfig));
 		const boardSizePixH = 16 + boardProps.bsH * 196;
 		const boardSizePixV = 136 + boardProps.bsV * 196;
 		const boardStyle = {
@@ -87,6 +88,9 @@ class GameBoard extends React.Component {
 				key={'product-' + index}
 				id={index}
 				value={cellValue}
+				restrictedMoves={boardConfig.restrictedMoves}
+				addInc={boardConfig.addInc}
+				subDec={boardConfig.subDec}
 				hint={this.state.hint}
 				gameOver={this.state.gameOver}
 				type={boardProps.boardType}
@@ -98,7 +102,7 @@ class GameBoard extends React.Component {
 		cellComponents.push(<ScoreCell title='Time:' score={Util.formatPlayingTime(this.state.playingTime)} />);
 		if (this.state.gameOver) {
 			cellComponents.push(<br/>);
-			cellComponents.push(<GameOverDialog anotherGame={this.handleAnotherGame} aDifferentGame={this.handleADifferentGame} registerScore={this.handleRegisterScore} />)
+			cellComponents.push(<GameOverDialog anotherGame={this.handleAnotherGame} differentGame={this.handleDifferentGame} registerScore={this.handleRegisterScore} />)
 		}
 		return (
 			<div style={boardRootStyle} >

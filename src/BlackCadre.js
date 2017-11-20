@@ -15,7 +15,7 @@ class BlackCadre extends React.Component {
 		const innerRimStyle = {
 			textAlign: 'center',
 			width: this.props.width - 2 * this.props.borderWidth,
-			borderRadius: 15,
+			borderRadius: 10,
 			display: 'inline-block',
 			backgroundColor: 'white',
 			color: 'black',

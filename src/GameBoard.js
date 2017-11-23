@@ -17,7 +17,6 @@ class GameBoard extends React.Component {
 	handleSumCommand = (cellIndex, direction) => {
 		const boardProps = this.props.boardProperties;
 		const boardConfig = this.props.boardConfig;
-		const boardSize = this.props.boardSize;
 		const nextCells = JSON.parse(JSON.stringify(this.state.cells));
 		const changeDesc = Util.computeChangeDesc(boardProps.bsH, boardProps.bsV, cellIndex, direction);
 		const oldVal = nextCells[cellIndex];
@@ -57,10 +56,6 @@ class GameBoard extends React.Component {
 		const hint = (boardConfig.playingHints ? Util.calcHint(cells, boardProps.bsH, boardProps.boardType) : {});
 		this.setState({ cells: cells, numMoves: 0, playingTime: 0, gameOver: false, hint: hint });
 		this.timerInterval = setInterval(() => this.handleClockTick(), 1000);
-	};
-
-	handleChangeInverse = (val) => {
-		this.setState({ inverseCalculations: val })
 	};
 
 	render() {

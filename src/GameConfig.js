@@ -20,6 +20,7 @@ class GameConfig extends React.Component {
 		this.props.onStartGame(this.state);
 	};
 
+	// Kan weg hier???
 	mapBoardSize = (boardSize) => {
 		switch (boardSize) {
 			case 'rad2x1': return { h: 2, v: 1 };

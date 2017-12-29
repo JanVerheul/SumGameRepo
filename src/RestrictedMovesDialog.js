@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import * as Util from './Util';
 
 class RestrictedMovesDialog extends React.Component {

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import GameCell from './GameCell';
 import ScoreCell from './ScoreCell';
 import GameOverDialog from './GameOverDialog';
@@ -61,7 +61,6 @@ class GameBoard extends React.Component {
 	render() {
 		const boardProps = this.props.boardProperties;
 		const boardConfig = this.props.boardConfig;
-console.log('BOARD CONFIG: ' + JSON.stringify(boardConfig));
 		const boardSizePixH = 16 + boardProps.bsH * 196;
 		const boardSizePixV = 136 + boardProps.bsV * 196;
 		const boardStyle = {

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import GameBoard from './GameBoard';
 import GameConfig from './GameConfig';
 import NameForm from './NameForm';

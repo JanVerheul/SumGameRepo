@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import BlackCadre from './BlackCadre';
 import * as Util from './Util';
 import HallOfFameDialog from './HallOfFameDialog';

@@ -428,3 +428,5 @@ export class PlaySeq {
 		return result;
 	}
 }
+
+// Kiekeboe!

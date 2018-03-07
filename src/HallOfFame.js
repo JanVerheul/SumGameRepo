@@ -115,8 +115,8 @@ class HallOfFame extends React.Component {
 			color: 'white',
 			backgroundColor: 'black'
 		}
-		const entries = this.props.hofList.sort(this.compFunc).map((entry) => (
-			<tr>
+		const entries = this.props.hofList.sort(this.compFunc).map((entry, index) => (
+			<tr key={'hofEntry-' + index}>
 				<td style={tableElementStyle} >{entry.name}</td>
 				<td style={tableElementStyle} >{Util.formatDate(entry.date)}</td>
 				<td style={tableElementStyle} >{entry.moves}</td>

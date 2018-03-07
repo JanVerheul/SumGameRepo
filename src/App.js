@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 
 import './semantic-dist/semantic.css';
 
-import GameBoard from './GameBoard';
-import GameConfig from './GameConfig';
+//import GameBoard from './GameBoard';
+//import GameConfig from './GameConfig';
 import GameRoot from './GameRoot';
 
 class App extends Component {

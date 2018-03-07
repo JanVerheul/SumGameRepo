@@ -1,5 +1,5 @@
 import React from 'react';
-import * as Util from './Util';
+//import * as Util from './Util';
 
 class RestrictedMovesDialog extends React.Component {
     state = { restrictedMovesId: '', addInc: false, subDec: false };

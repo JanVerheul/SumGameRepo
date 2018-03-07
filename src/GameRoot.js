@@ -65,6 +65,7 @@ class GameRoot extends React.Component {
 			case 'radRand-10_10': return { lb: -10, ub: 10 };
 			case 'radRand-100_100': return { lb: -100, ub: 100 };
 			case 'radRand-1000_1000': return { lb: -1000, ub: 1000 };
+			case 'radFixed0': return { lb: 0, ub: 0 };
 			case 'radFixed10': return { lb: 10, ub: 10 };
 			case 'radFixed100': return { lb: 100, ub: 100 };
 			case 'radFixed1000': return { lb: 1000, ub: 1000};

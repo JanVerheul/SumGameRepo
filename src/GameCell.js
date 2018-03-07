@@ -51,11 +51,11 @@ class GameCell extends React.Component {
 			display: 'inline-block',
 			backgroundColor: (this.props.valueColors ? backGroundColor : 'red')
 		}
-		const type = this.props.type;
-		const activePb = this.props.gameOver == false && (!this.props.restrictedMoves || this.props.addInc);
-		const activePa = this.props.gameOver == false && (!this.props.restrictedMoves || !this.props.addInc);
-		const activeMb = this.props.gameOver == false && (!this.props.restrictedMoves || this.props.subDec);
-		const activeMa = this.props.gameOver == false && (!this.props.restrictedMoves || !this.props.subDec);
+		//const type = this.props.type;
+		const activePb = this.props.gameOver === false && (!this.props.restrictedMoves || this.props.addInc);
+		const activePa = this.props.gameOver === false && (!this.props.restrictedMoves || !this.props.addInc);
+		const activeMb = this.props.gameOver === false && (!this.props.restrictedMoves || this.props.subDec) && (this.props.negativesGuard.MB !== 'MB');
+		const activeMa = this.props.gameOver === false && (!this.props.restrictedMoves || !this.props.subDec) && (this.props.negativesGuard.MA !== 'MA');
 		return (
 			<div style={cellStyle} >
 				<CellButton hint={hint === 'PB'} active={activePb} handleClick={this.handleClick('PB')} >+</CellButton>

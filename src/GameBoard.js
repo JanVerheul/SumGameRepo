@@ -17,23 +17,14 @@ class GameBoard extends React.Component {
 	handleSumCommand = (cellIndex, direction) => {
 		const boardProps = this.props.boardProperties;
 		const boardConfig = this.props.boardConfig;
-		const nextCells = JSON.parse(JSON.stringify(this.state.cells));
-		const changeDesc = Util.computeChangeDesc(boardProps.bsH, boardProps.bsV, cellIndex, direction);
-		const oldVal = nextCells[cellIndex];
-		const newVal = oldVal + changeDesc.factor;
-		const numToChange = changeDesc.cells.length;
-		nextCells[cellIndex] = newVal;
-		for (let i = 0; i < numToChange; i++) {
-			const nextValue = nextCells[changeDesc.cells[i]] + (changeDesc.order === 'A' ? newVal : oldVal) * changeDesc.factor;
-			nextCells[changeDesc.cells[i]] = nextValue;
-		}
+		const nextCells = Util.computeChange(JSON.parse(JSON.stringify(this.state.cells)), cellIndex, direction);
 		const hint = (boardConfig.playingHints ? Util.calcHint(nextCells, boardProps.bsH, boardProps.boardType) : {});
 		this.setState({
 			cells: nextCells,
 			numMoves: this.state.numMoves + 1,
 			hint: hint
 		});
-		const allZero = Util.foldl(nextCells, (accu, cell) => (accu && (cell == 0)), true);
+		const allZero = Util.foldl(nextCells, (accu, cell) => (accu && (cell === 0)), true);
 		if (allZero) {
 			clearInterval(this.timerInterval);
 			this.setState({ gameOver: true });
@@ -52,7 +43,7 @@ class GameBoard extends React.Component {
 	startNewGame = () => {
 		const boardProps = this.props.boardProperties;
 		const boardConfig = this.props.boardConfig;
-		const cells = Util.generateCells(boardProps.bsH * boardProps.bsV, boardConfig.valuePool);
+		const cells = Util.generateCells(boardProps.bsH * boardProps.bsV, boardConfig.valuePool, boardConfig.noNegatives);
 		const hint = (boardConfig.playingHints ? Util.calcHint(cells, boardProps.bsH, boardProps.boardType) : {});
 		this.setState({ cells: cells, numMoves: 0, playingTime: 0, gameOver: false, hint: hint });
 		this.timerInterval = setInterval(() => this.handleClockTick(), 1000);
@@ -62,7 +53,7 @@ class GameBoard extends React.Component {
 		const boardProps = this.props.boardProperties;
 		const boardConfig = this.props.boardConfig;
 		const boardSizePixH = 16 + boardProps.bsH * 196;
-		const boardSizePixV = 136 + boardProps.bsV * 196;
+		//const boardSizePixV = 136 + boardProps.bsV * 196;
 		const boardStyle = {
 			textAlign: 'center',
 			width: boardSizePixH,
@@ -77,12 +68,14 @@ class GameBoard extends React.Component {
 			textAlign: 'center',
 		};
 		const cells = this.state.cells;
+		const negativesGuardList = Util.getNegativesGuardList(cells);
 		let cellComponents = cells.map((cellValue, index) => (
 			<GameCell
-				key={'product-' + index}
+				key={'gameCell-' + index}
 				id={index}
 				value={cellValue}
 				restrictedMoves={boardConfig.restrictedMoves}
+				negativesGuard={boardConfig.noNegatives ? negativesGuardList[index] : {}}
 				addInc={boardConfig.addInc}
 				subDec={boardConfig.subDec}
 				hint={this.state.hint}
@@ -92,11 +85,11 @@ class GameBoard extends React.Component {
 				handleClick={this.handleSumCommand}
 			/>
 		));
-		cellComponents.push(<ScoreCell title='Moves:' score={this.state.numMoves} />);
-		cellComponents.push(<ScoreCell title='Time:' score={Util.formatPlayingTime(this.state.playingTime)} />);
+		cellComponents.push(<ScoreCell key='scoreCellMoves' title='Moves:' score={this.state.numMoves} />);
+		cellComponents.push(<ScoreCell key='scoreCellTime' title='Time:' score={Util.formatPlayingTime(this.state.playingTime)} />);
 		if (this.state.gameOver) {
-			cellComponents.push(<br/>);
-			cellComponents.push(<GameOverDialog anotherGame={this.handleAnotherGame} differentGame={this.handleDifferentGame} registerScore={this.handleRegisterScore} />)
+			cellComponents.push(<br key='break' />);
+			cellComponents.push(<GameOverDialog key='gameOverDialog' anotherGame={this.handleAnotherGame} differentGame={this.handleDifferentGame} registerScore={this.handleRegisterScore} />)
 		}
 		return (
 			<div style={boardRootStyle} >

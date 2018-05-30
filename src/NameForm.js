@@ -29,13 +29,15 @@ class NameForm extends React.Component {
 		}
 		return (
 			<div style={rootStyle} >
-				<BlackCadre width={500} borderWidth={15} padding={10} title='Score Registration' >
-					<div style={textStyle} >
-						<h2>Enter your name if you want your achievemens to be remembered by posterity</h2>
-						<input autoFocus ref='nameInput' style={nameFormInputStyle} type='text' onKeyPress={this.handleKeyPress}/>
-						<br />
-						<GameButton click={this.onDoneButtonClick} width={360}>Done</GameButton>
-					</div>
+				<BlackCadre width={600} borderWidth={15} padding={10} title='Connected Sums Game &nbsp;&nbsp;&nbsp;&nbsp; Created by J.C. Verheul'>
+					<BlackCadre width={500} borderWidth={15} padding={10} title='Score Registration' >
+						<div style={textStyle} >
+							<h2>Enter your name if you want your achievemens to be remembered by posterity</h2>
+							<input autoFocus ref='nameInput' style={nameFormInputStyle} type='text' onKeyPress={this.handleKeyPress}/>
+							<br />
+							<GameButton click={this.onDoneButtonClick} width={360}>Done</GameButton>
+						</div>
+					</BlackCadre>
 				</BlackCadre>
 			</div>
 		);

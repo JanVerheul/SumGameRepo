@@ -1,21 +1,19 @@
 import React, { Component } from 'react';
-
 import './semantic-dist/semantic.css';
-
-//import GameBoard from './GameBoard';
-//import GameConfig from './GameConfig';
 import GameRoot from './GameRoot';
 
 class App extends Component {
 	headerStyle = {
 		textAlign: 'center'
 	};
+	hSeparatorStyle = {
+		width: 250,
+		height: 10
+	};
 	render() {
 		return (
 			<div className="App">
-				<header style={this.headerStyle} >
-					<h1>Connected Sums Game</h1>
-				</header>
+				<div style={this.hSeparatorStyle} />
 				<GameRoot />
 			</div>
 		);

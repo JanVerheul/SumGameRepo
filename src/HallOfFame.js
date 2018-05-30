@@ -125,23 +125,25 @@ class HallOfFame extends React.Component {
 		));
 		return (
 			<div style={rootStyle}>
-				<BlackCadre width={720} borderWidth={15} padding={10} title='Hall  Of  Fame' >
-					<div style={textStyle} >
-						<h2>Achievements To Be Remembered Eternally</h2>
-							<table style={tableStyle} >
-							<thead>
-								<tr>
-									<td style={tableElementHeadStyle} >Name</td>
-									<td style={tableElementHeadStyle} >Date</td>
-									<td style={tableElementHeadStyle} >Moves</td>
-									<td style={tableElementHeadEdgeStyle} >Time</td></tr>
-							</thead>
-							<tbody>
-								{entries}
-							</tbody>
-						</table>
-						<HallOfFameDialog anotherGame={this.props.anotherGame} differentGame={this.props.differentGame} sortMoves={this.sortMoves} sortTime={this.sortTime} />
-					</div>
+				<BlackCadre width={770} borderWidth={15} padding={10} title='Connected Sums Game &nbsp;&nbsp;&nbsp;&nbsp; Created by J.C. Verheul'>
+					<BlackCadre width={720} borderWidth={15} padding={10} title='Hall  of  Fame' >
+						<div style={textStyle} >
+							<h2>Achievements To Be Remembered Eternally</h2>
+								<table style={tableStyle} >
+								<thead>
+									<tr>
+										<td style={tableElementHeadStyle} >Name</td>
+										<td style={tableElementHeadStyle} >Date</td>
+										<td style={tableElementHeadStyle} >Moves</td>
+										<td style={tableElementHeadEdgeStyle} >Time</td></tr>
+								</thead>
+								<tbody>
+									{entries}
+								</tbody>
+							</table>
+							<HallOfFameDialog anotherGame={this.props.anotherGame} differentGame={this.props.differentGame} sortMoves={this.sortMoves} sortTime={this.sortTime} />
+						</div>
+					</BlackCadre>
 				</BlackCadre>
 			</div>
 		);

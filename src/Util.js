@@ -1,19 +1,15 @@
 
-// function for computing cell connections
-
-const fixedValues = [-13, 0, 8, 0, 0, 0];
+///////////////////////////////////////////
+// function for computing cell opertions //
+///////////////////////////////////////////
 
 export const computeChange = (cells, cellIndex, direction) => {
 	const factor = (direction === 'PA' || direction === 'PB' ? 1 : -1);
 	const order = (direction === 'PA' || direction === 'MA' ? 'A' : 'B');
 	const oldVal = cells[cellIndex];
 	const newVal = oldVal + factor;
-	const numToChange = cells.length;
-	for (let i = 0; i < numToChange; i++) {
-		const nextValue = (i === cellIndex ? newVal : cells[i] + (order === 'A' ? newVal : oldVal) * factor);
-		cells[i] = nextValue;
-	}
-	return cells;
+	const calcNext = (val, i) => (i === cellIndex ? newVal : cells[i] + (order === 'A' ? newVal : oldVal) * factor);
+	return cells.map(calcNext);
 };
 
 export const getNegativesGuardList = (cells) => {
@@ -34,17 +30,20 @@ export const getNegativesGuardList = (cells) => {
 };
 
 const containsNegatives = (cells) => {
-	for (let i = 0; i < cells.length; i++) {
-		if (cells[i] < 0) {
-			return true;
-		}
-	}
-	return false;
+	let result = false;
+	cells.forEach((val) => {
+		if (val < 0) result = true;
+	});
+	return result;
 };
 
-// functions for generating cell content
+///////////////////////////////////////////
+// functions for generating cell content //
+///////////////////////////////////////////
 
 const generateCellNumber = ({ lb, ub }) => ((lb === ub ? lb : lb + Math.floor(Math.random() * (ub - lb + 1))));
+
+const fixedValues = [-13, 0, 8, 0, 0, 0]; // for testing and experimenting purposes
 
 export const generateCells = (number, valuePool, noNegatives) => {
 	let res = [];
@@ -62,7 +61,9 @@ export const generateCells = (number, valuePool, noNegatives) => {
 	return res;
 };
 
-// general utility functions
+///////////////////////////////
+// general utility functions //
+///////////////////////////////
 
 export const formatPlayingTime = (numSeconds) => {
 	const seconds = numSeconds % 60;
@@ -81,16 +82,17 @@ export const formatDate = (epochNum) => {
 
 export const foldl = (iterable, f, initial) => {
 	let accu = initial;
-	for (let i = 0; i < iterable.length; i++) {
-		accu = f(accu, iterable[i]);
-	}
+	iterable.forEach((elem) => {
+		accu = f(accu, elem);
+	})
 	return accu;
 }
 
 const twoPos = (num) => (num < 10 ? '0' + num : num);
 
-
-// functions for calculating hints
+/////////////////////////////////////
+// functions for calculating hints //
+/////////////////////////////////////
 
 export const calcHint = (cells, mod, boardType) => {
 	const res = strategyFour(new PlaySeq(cells));
@@ -182,13 +184,10 @@ const getIndexesHighest = (intList) => (foldl(intList, predicateIndexesHighest, 
 const getIndexesAll = (intList) => (intList.map((value, index) => index));
 
 const predicateIndexesZeroes = ({ indexes, index }, value) => {
-	if (value === 0) {
-		return { indexes: indexes.concat([index]), index: index + 1 };
-	}
-	else {
-		return { indexes: indexes, index: index + 1};
-	}
+	if (value === 0) return { indexes: indexes.concat([index]), index: index + 1 }
+	else return { indexes: indexes, index: index + 1};
 };
+
 const getIndexesZeroes = (intList) => (foldl(intList, predicateIndexesZeroes, { indexes: [], index: 0 }).indexes);
 
 const randSel = (lst) => {
@@ -203,53 +202,37 @@ export class PlaySeq {
 	addInc(index) {
         let v = this.playSeq[index];
         let newSeq = [];
-		for (let i = 0; i < this.playSeq.length; i++) {
-			if (i === index) {
-				newSeq[i] = v + 1;
-			}
-			else {
-				newSeq[i] = this.playSeq[i] + v;
-			}
-		}
+		this.playSeq.forEach((val, i) => {
+			if (i === index) newSeq.push(v + 1)
+			else newSeq.push(val + v)
+		})
         return new PlaySeq(newSeq);
     }
     incAdd(index) {
 		let v = this.playSeq[index] + 1;
         let newSeq = [];
-		for (let i = 0; i < this.playSeq.length; i++) {
-			if (i === index) {
-				newSeq[i] = v;
-			}
-			else {
-				newSeq[i] = this.playSeq[i] + v;
-			}
-		}
+		this.playSeq.forEach((val, i) => {
+			if (i === index) newSeq.push(v)
+			else newSeq.push(val + v)
+		})
         return new PlaySeq(newSeq);
     }
     subDec(index) {
 		let v = this.playSeq[index];
         let newSeq = [];
-		for (let i = 0; i < this.playSeq.length; i++) {
-			if (i === index) {
-				newSeq[i] = v - 1;
-			}
-			else {
-				newSeq[i] = this.playSeq[i] - v;
-			}
-		}
+		this.playSeq.forEach((val, i) => {
+			if (i === index) newSeq.push(v - 1)
+			else newSeq.push(val - v)
+		})
         return new PlaySeq(newSeq);
     }
     decSub(index) {
 		let v = this.playSeq[index] - 1;
         let newSeq = [];
-		for (let i = 0; i < this.playSeq.length; i++) {
-			if (i === index) {
-				newSeq[i] = v;
-			}
-			else {
-				newSeq[i] = this.playSeq[i] + v;
-			}
-		}
+		this.playSeq.forEach((val, i) => {
+			if (i === index) newSeq.push(v)
+			else newSeq.push(val - v)
+		})
         return new PlaySeq(newSeq);
     }
     size() {
@@ -428,5 +411,3 @@ export class PlaySeq {
 		return result;
 	}
 }
-
-// Kiekeboe!

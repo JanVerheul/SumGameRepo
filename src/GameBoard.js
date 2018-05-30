@@ -1,4 +1,5 @@
 import React from 'react';
+import BlackCadre from './BlackCadre';
 import GameCell from './GameCell';
 import ScoreCell from './ScoreCell';
 import GameOverDialog from './GameOverDialog';
@@ -53,7 +54,7 @@ class GameBoard extends React.Component {
 		const boardProps = this.props.boardProperties;
 		const boardConfig = this.props.boardConfig;
 		const boardSizePixH = 16 + boardProps.bsH * 196;
-		//const boardSizePixV = 136 + boardProps.bsV * 196;
+		const cadreWidth = Math.max(600, boardSizePixH + 50);
 		const boardStyle = {
 			textAlign: 'center',
 			width: boardSizePixH,
@@ -93,9 +94,11 @@ class GameBoard extends React.Component {
 		}
 		return (
 			<div style={boardRootStyle} >
-				<div style={boardStyle} >
-					{cellComponents}
-				</div>
+				<BlackCadre width={cadreWidth} borderWidth={15} padding={10} title='Connected Sums Game &nbsp;&nbsp;&nbsp;&nbsp; Created by J.C. Verheul'>
+					<div style={boardStyle} >
+						{cellComponents}
+					</div>
+				</BlackCadre>
 			</div>
 		);
 	}

@@ -4,7 +4,8 @@ import GameButton from './GameButton';
 
 export const gameRulesEnglish = <div>
     <p>
-        The objective of the game is to reduce the numeric values in all cells of the game to zero. Each cell has two buttons labeled with a plus sign and
+        The game consists of a configurable number of cells with numbers and buttons in them (2, 3, 4 or 5 cells).
+        The objective of the game is to reduce the numbers in all cells of the game to zero. Each cell has two buttons labeled with a plus sign and
         two buttons labeled with a minus sign. When pressing a button with a plus sign, the value of that cell is incremented by one. When pressing a button
         with a minus sign, the value of that cell is decremented by one. When pressing the left side button with plus sign, all other cells are incremented by the
         value in the cell in which the button is pressed before the cell value is incremented itself. When pressing the right side button with plus sign, all other
@@ -15,16 +16,17 @@ export const gameRulesEnglish = <div>
     </p>
     <p>
         When using a good strategy, the number of steps necessary to reduce a given set of cell values to zero is log-related to the maximum of the absolute
-        values of the cells. If we define the difficulty of a given set of cell values as the maximum of the absolute values of the cells, then in case of 3 cells,
-        solving a game that is 10 times as difficult as a given game will take about 13 additional steps. To put it in more concrete figures:
+        values of the cells. If we define the difficulty of a given game as the maximum of the absolute values of the cells, then solving a game with difficulty N
+        can be done:
 		<ul>
-			<li>Solving (10, 10, 10) can be done in 12 steps (likely the absolute minimum).</li>
-			<li>Solving (100, 100, 100) can be done in 26 steps or less.</li>
-			<li>Solving (1000, 1000, 1000) can be done in 40 steps or less.</li>
-			<li>Solving (10,000, 10,000, 10,000) can be done in 48 steps or less.</li>
-			<li>Solving (100,000, 100,000, 100,000) can be done in 66 steps or less.</li>
-			<li>Solving (1,000,000, 1,000,000, 1,000,000) can be done in 72 steps or less.</li>
+			<li>For 2 cells in about 8 log10 N steps.</li>
+            <li>For 3 cells in about 6 log10 N steps.</li>
+            <li>For 4 cells in about 13 log10 N steps.</li>
+            <li>For 5 cells in about 18 log10 N steps.</li>
 		</ul>
+        These figures will be approached by the hint calculator that is available in the game, but are very difficult to attain by human players. The figures
+        are averages over thousants of randomly generated cell contents (with evenly distributed random numbers). Starting with a sequence of equal fixed
+        numbers will usually take a bit more steps than the above mentioned formulas.
     </p>
     <p>
         Learning strategies to play the game can be done by selecting the checkbox "Playing Hints" at Game Configuration and look at the moves that are
@@ -35,28 +37,31 @@ export const gameRulesEnglish = <div>
 
 export const gameRulesDutch = <div>
     <p>
+        Het spel bestaat uit een configureerbaar aantal cellen met getallen en knoppen erin (2, 3, 4 of 5 cellen).
         Het doel van het spel is het terugbrengen tot nul van alle waarden in alle cellen. Elke cel heeft twee knoppen gelabeld met een plus-teken en twee
         knoppen gelabeld met een min-teken. Drukken op een plus-knop heeft het verhogen met &#233;&#233;n van de celwaarde tot gevolg. Drukken op een min-knop
 		heeft het verlagen van de celwaarde met &#233;&#233;n tot gevolg. Het drukken van de linker plus-knop heeft verder tot gevolg dat alle celwaarden
-		verhoogd worden met de waarde in de cel waarin de knop gedrukt is voordat de cel zelf ge&#239;ncrementeerd wordt. Het dukken van de rechter plus-knop
+		verhoogd worden met de waarde in de cel waarin de knop gedrukt is voordat de cel zelf ge&#239;ncrementeerd wordt. Het drukken van de rechter plus-knop
 		heeft verder tot gevolg dat alle celwaarden verhoogd worden met de waarde in de cel waarin de knop gedrukt is nadat de cel zelf ge&#239;ncrementeerd is.
 		Soortgelijk gedrag van de knoppen met min-tekens. Het drukken van de linker min-knop heeft verder tot gevolg dat alle celwaarden verlaagd worden met de
-		waarde in de cel waarin de knop gedrukt is voordat de cel zelf gedecrementeerd wordt. Het dukken van de rechter min-knop heeft verder tot gevolg dat
+		waarde in de cel waarin de knop gedrukt is voordat de cel zelf gedecrementeerd wordt. Het drukken van de rechter min-knop heeft verder tot gevolg dat
 		alle celwaarden verlaagd worden met de waarde in de cel waarin de knop gedrukt is nadat de cel zelf gedecrementeerd is.
     </p>
     <p>
 		Als een goede strategie gevolgd wordt is het aantal stappen dat nodig is om een verzameling celwaarden tot nul te reduceren logaritmisch gerelateerd
 		met het maximum van de absolute waarden van de celinhoud. Als we de moeilijkheidsgraad van een bepaalde verzameling celwaarden defini&#235;ren als het
-		maximum van de absolute waarden van de celinhoud, dan geldt voor een spel met 3 cellen dat het oplossen van een spel met een 10 maal zo hoge
-		moeilijkheidsgraad ongeveer 13 extra stappen kost. Concrete cijfers:
-		<ul>
-			<li>Het oplossen van (10, 10, 10) kan in 12 stappen (waarschijnlijk het absolute minimum).</li>
-			<li>Het oplossen van (100, 100, 100) kan in 26 stappen of minder.</li>
-			<li>Het oplossen van (1000, 1000, 1000) kan in 40 stappen of minder.</li>
-			<li>Het oplossen van (10.000, 10.000, 10.000) kan in 48 stappen of minder.</li>
-			<li>Het oplossen van (100.000, 100.000, 100.000) kan in 66 stappen of minder.</li>
-			<li>Het oplossen van (1.000.000, 1.000.000, 1.000.000) kan in 72 stappen of minder.</li>
+		maximum van de absolute waarden van de celinhoud, dan geldt voor het oplossen van een spel met moeilijkheidsgraad N:
+        <ul>
+			<li>Oplossen van 2 cellen kost ongeveer 8 log10 N stappen.</li>
+            <li>Oplossen van 3 cellen kost ongeveer 6 log10 N stappen.</li>
+            <li>Oplossen van 4 cellen kost ongeveer 13 log10 N stappen.</li>
+            <li>Oplossen van 5 cellen kost ongeveer 18 log10 N stappen.</li>
 		</ul>
+    </p>
+    <p>
+        Deze getallen zullen benaderd worden door het hint-mechanisme dat aanwezig is in het spel, maar zijn zeer moeilijk te bereiken door menselijke spelers.
+        De getallen zijn gemiddelden over duizenden reeksen cellen met willekeurig gegenereerde inhoud. Als begonnen wordt met een reeks cellen met gelijke
+        inhoud zal het aantal stappen iets hoger liggen.
     </p>
     <p>
 		Het leren van strategie&#235;n om het spel te spelen kan door het aanvinken van "Playing Hints" in de configuratiefase en goed te kijken naar de zetten

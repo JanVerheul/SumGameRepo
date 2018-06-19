@@ -52,17 +52,18 @@ class GameCell extends React.Component {
 			backgroundColor: (this.props.valueColors ? backGroundColor : 'red')
 		}
 		//const type = this.props.type;
-		const activePb = this.props.gameOver === false && (!this.props.restrictedMoves || this.props.addInc);
-		const activePa = this.props.gameOver === false && (!this.props.restrictedMoves || !this.props.addInc);
-		const activeMb = this.props.gameOver === false && (!this.props.restrictedMoves || this.props.subDec) && (this.props.negativesGuard.MB !== 'MB');
-		const activeMa = this.props.gameOver === false && (!this.props.restrictedMoves || !this.props.subDec) && (this.props.negativesGuard.MA !== 'MA');
+		const md = this.props.moveDirs;
+		const activePb = this.props.gameOver === false && (!this.props.restrictedMoves || md === 'addIncSubDec' || md === 'addIncDecSub' || md === 'all');
+		const activePa = this.props.gameOver === false && (!this.props.restrictedMoves || md === 'incAddSubDec' || md === 'incAddDecSub' || md === 'all');
+		const activeMb = this.props.gameOver === false && (!this.props.restrictedMoves || md === 'addIncSubDec' || md === 'incAddSubDec' || md === 'all') && (this.props.negativesGuard.subDec !== 'subDec');
+		const activeMa = this.props.gameOver === false && (!this.props.restrictedMoves || md === 'addIncDecSub' || md === 'incAddDecSub' || md === 'all') && (this.props.negativesGuard.decSub !== 'decSub');
 		return (
 			<div style={cellStyle} >
-				<CellButton hint={hint === 'PB'} active={activePb} handleClick={this.handleClick('PB')} >+</CellButton>
-				<CellButton hint={hint === 'PA'} active={activePa} handleClick={this.handleClick('PA')}>+</CellButton>
+				<CellButton hint={hint === 'addInc'} active={activePb} handleClick={this.handleClick('addInc')} >+</CellButton>
+				<CellButton hint={hint === 'incAdd'} active={activePa} handleClick={this.handleClick('incAdd')}>+</CellButton>
 				<div style={cdatStyle}>{this.props.value}</div>
-				<CellButton hint={hint === 'MB'} active={activeMb} handleClick={this.handleClick('MB')}>-</CellButton>
-				<CellButton hint={hint === 'MA'} active={activeMa} handleClick={this.handleClick('MA')}>-</CellButton>
+				<CellButton hint={hint === 'subDec'} active={activeMb} handleClick={this.handleClick('subDec')}>-</CellButton>
+				<CellButton hint={hint === 'decSub'} active={activeMa} handleClick={this.handleClick('decSub')}>-</CellButton>
 			</div>
 		);
 	}

@@ -2,24 +2,24 @@ import React from 'react';
 //import * as Util from './Util';
 
 class RestrictedMovesDialog extends React.Component {
-    state = { restrictedMovesId: '', addInc: false, subDec: false };
+    state = { restrictedMovesId: 'addIncSubDec' };
 
     onChange = (evt) => {
         if (evt.target.id === 'addIncSubDec') {
-			this.setState({ restrictedMovesId: 'addIncSubDec', addInc: true, subDec: true });
-            this.props.handleRestrictedMoves({ addInc: true, subDec: true });
+			this.setState({ restrictedMovesId: 'addIncSubDec' });
+            this.props.handleRestrictedMoves({ moveDirs: 'addIncSubDec' });
 		}
 		else if (evt.target.id === 'incAddDecSub') {
 			this.setState({ restrictedMovesId: 'incAddDecSub' });
-            this.props.handleRestrictedMoves({ addInc: false, subDec: false });
+            this.props.handleRestrictedMoves({ moveDirs: 'incAddDecSub' });
 		}
 		else if (evt.target.id === 'addIncDecSub') {
 			this.setState({ restrictedMovesId: 'addIncDecSub' });
-            this.props.handleRestrictedMoves({ addInc: true, subDec: false });
+            this.props.handleRestrictedMoves({ moveDirs: 'addIncDecSub' });
 		}
 		else if (evt.target.id === 'incAddSubDec') {
 			this.setState({ restrictedMovesId: 'incAddSubDec' });
-            this.props.handleRestrictedMoves({ addInc: false, subDec: true });
+            this.props.handleRestrictedMoves({ moveDirs: 'incAddSubDec' });
 		}
 
     }
@@ -32,19 +32,19 @@ class RestrictedMovesDialog extends React.Component {
         return (
             <div>
                 <div style={radDivStyle} >
-                    <input id='addIncSubDec' type='radio' name='rg-rm' value={this.state.restrictedMovesId === 'addIncSubDec'} onChange={this.onChange} />
+                    <input id='addIncSubDec' type='radio' name='rg-rm' defaultChecked={this.state.restrictedMovesId === 'addIncSubDec'} onChange={this.onChange} />
                     <label><b>&nbsp; Add-Inc / Sub-Dec</b></label>
                 </div>
                 <div style={radDivStyle} >
-                    <input id='incAddDecSub' type='radio' name='rg-rm' value={this.state.restrictedMovesId === 'incAddDecSub'} onChange={this.onChange} />
+                    <input id='incAddDecSub' type='radio' name='rg-rm' defaultChecked={this.state.restrictedMovesId === 'incAddDecSub'} onChange={this.onChange} />
                     <label><b>&nbsp; Inc-Add / Dec-Sub</b></label>
                 </div>
                 <div style={radDivStyle} >
-                    <input id='addIncDecSub' type='radio' name='rg-rm' value={this.state.restrictedMovesId === 'addIncDecSub'} onChange={this.onChange} />
+                    <input id='addIncDecSub' type='radio' name='rg-rm' defaultChecked={this.state.restrictedMovesId === 'addIncDecSub'} onChange={this.onChange} />
                     <label><b>&nbsp; Add-Inc / Dec-Sub</b></label>
                 </div>
                 <div style={radDivStyle} >
-                    <input id='incAddSubDec' type='radio' name='rg-rm' value={this.state.restrictedMovesId === 'incAddSubDec'} onChange={this.onChange} />
+                    <input id='incAddSubDec' type='radio' name='rg-rm' defaultChecked={this.state.restrictedMovesId === 'incAddSubDec'} onChange={this.onChange} />
                     <label><b>&nbsp; Inc-Add / Sub-Dec</b></label>
                 </div>
             </div>

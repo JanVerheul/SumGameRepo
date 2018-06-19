@@ -11,29 +11,17 @@ class GameConfig extends React.Component {
 		playingHints: false,
 		noNegatives: false,
 		restrictedMoves: false,
-		addInc: false,
-		subDec: false,
+		moveDirs: 'addIncSubDec',
 		valuePool: 'radFixed1000'
 	};
 
 	onStartGame = (evt) => {
-		this.props.onStartGame(this.state);
+		this.props.onStartGame(Object.assign(
+			{},
+			this.state,
+			{ valuePool: this.mapValuePool(this.state.valuePool), boardSize: this.mapBoardSize(this.state.boardSize) })
+		);
 	};
-
-	// Kan weg hier???
-	// mapBoardSize = (boardSize) => {
-	// 	switch (boardSize) {
-	// 		case 'rad2x1': return { h: 2, v: 1 };
-	// 		case 'rad2x3': return { h: 2, v: 3 };
-	// 		case 'rad3x1': return { h: 3, v: 1 };
-	// 		case 'rad3x3': return { h: 3, v: 3 };
-	// 		case 'rad4x1': return { h: 4, v: 1 };
-	// 		case 'rad4x3': return { h: 4, v: 3 };
-	// 		case 'rad5x1': return { h: 5, v: 1 };
-	// 		case 'rad5x3': return { h: 5, v: 3 };
-	// 		default: return { h: 0, v: 0 };
-	// 	}
-	// };
 
 	onChangeRadBs = (evt) => (this.setState({ boardSize: evt.target.id }));
 
@@ -43,7 +31,7 @@ class GameConfig extends React.Component {
 		}
 		else if (evt.target.name === 'ch-playing-hints') {
 			if (evt.target.checked) {
-				this.setState({ playingHints: true, noNegatives: false, restrictedMoves: false });
+				this.setState({ playingHints: true, noNegatives: false });
 			}
 			else {
 				this.setState({ playingHints: false });
@@ -59,7 +47,7 @@ class GameConfig extends React.Component {
 		}
 		else if (evt.target.name === 'ch-restricted-moves') {
 			if (evt.target.checked) {
-				this.setState({ restrictedMoves: true, playingHints: false });
+				this.setState({ restrictedMoves: true });
 			}
 			else {
 				this.setState({ restrictedMoves: false });
@@ -76,6 +64,33 @@ class GameConfig extends React.Component {
 	componentDidMount() {
 	}
 
+	mapValuePool = (poolId) => {
+		switch (poolId) {
+			case 'radRand-10_10': return { lb: -10, ub: 10 };
+			case 'radRand-100_100': return { lb: -100, ub: 100 };
+			case 'radRand-1000_1000': return { lb: -1000, ub: 1000 };
+			case 'radRand-10000_10000': return { lb: -10000, ub: 10000 };
+			case 'radRand-100000_100000': return { lb: -100000, ub: 100000 };
+			case 'radFixed0': return { lb: 0, ub: 0 };
+			case 'radFixed10': return { lb: 10, ub: 10 };
+			case 'radFixed100': return { lb: 100, ub: 100 };
+			case 'radFixed1000': return { lb: 1000, ub: 1000};
+			case 'radFixed10000': return { lb: 10000, ub: 10000};
+			case 'radFixed100000': return { lb: 100000, ub: 100000};
+			case 'radFixed1000000': return { lb: 1000000, ub: 1000000};
+			default: return { lb: 0, ub: 0 };
+		}
+	};
+
+	mapBoardSize = (boardSizeId => {
+		switch (boardSizeId) {
+			case 'rad2x1': return 2;
+			case 'rad3x1': return 3;
+			case 'rad4x1': return 4;
+			case 'rad5x1': return 5;
+		}
+	})
+
 	render() {
 		const rootStyle = {
 			textAlign: 'center'
@@ -86,18 +101,18 @@ class GameConfig extends React.Component {
 			display: 'inline-block'
 		};
 		const radVpStyle = {
-			width: 246,
+			width: 286,
 			fontSize: 22,
 			textAlign: 'left',
-			marginLeft: 30,
+			marginLeft: 10,
 			display: 'inline-block'
 		};
 		const configDifficultyChecksStyle = {
 			textAlign: 'left',
-			marginLeft: 45
+			marginLeft: 30
 		};
 		const chDivStyle = {
-			width: 268,
+			width: 278,
 			fontSize: '18pt',
 			display: 'inline-block'
 		};
@@ -118,32 +133,16 @@ class GameConfig extends React.Component {
 										<label><b>&nbsp; 2 x 1</b></label>
 									</div>
 									<div style={radBsStyle} >
-										<input id='rad2x3' type='radio' name='rg-bs' defaultChecked={this.state.boardSize === 'rad2x3'} onChange={this.onChangeRadBs} />
-										<label><b>&nbsp; 2 x 3</b></label>
-									</div>
-									<div style={radBsStyle} >
 										<input id='rad3x1' type='radio' name='rg-bs' defaultChecked={this.state.boardSize === 'rad3x1'} onChange={this.onChangeRadBs} />
 										<label><b>&nbsp; 3 x 1</b></label>
-									</div>
-									<div style={radBsStyle} >
-										<input id='rad3x3' type='radio' name='rg-bs' defaultChecked={this.state.boardSize === 'rad3x3'} onChange={this.onChangeRadBs} />
-										<label><b>&nbsp; 3 x 3</b></label>
 									</div>
 									<div style={radBsStyle} >
 										<input id='rad4x1' type='radio' name='rg-bs' defaultChecked={this.state.boardSize === 'rad4x1'} onChange={this.onChangeRadBs} />
 										<label><b>&nbsp; 4 x 1</b></label>
 									</div>
 									<div style={radBsStyle} >
-										<input id='rad4x3' type='radio' name='rg-bs' defaultChecked={this.state.boardSize === 'rad4x3'} onChange={this.onChangeRadBs} />
-										<label><b>&nbsp; 4 x 3</b></label>
-									</div>
-									<div style={radBsStyle} >
 										<input id='rad5x1' type='radio' name='rg-bs' defaultChecked={this.state.boardSize === 'rad5x1'} onChange={this.onChangeRadBs} />
 										<label><b>&nbsp; 5 x 1</b></label>
-									</div>
-									<div style={radBsStyle} >
-										<input id='rad5x3' type='radio' name='rg-bs' defaultChecked={this.state.boardSize === 'rad5x3'} onChange={this.onChangeRadBs} />
-										<label><b>&nbsp; 5 x 3</b></label>
 									</div>
 									<div style={hSeparatorStyle} />
 								</div>
@@ -191,8 +190,12 @@ class GameConfig extends React.Component {
 									<label><b>&nbsp; Fixed 10000</b></label>
 								</div>
 								<div style={radVpStyle} >
-									<input id='radRand1_10' type='radio' name='rg-vp' defaultChecked={this.state.valuePool === 'radRand1_10'} onChange={this.onChangeRadVp} />
-									<label><b>&nbsp; Random 1...10</b></label>
+									<input id='radFixed100000' type='radio' name='rg-vp' defaultChecked={this.state.valuePool === 'radFixed100000'} onChange={this.onChangeRadVp} />
+									<label><b>&nbsp; Fixed 100000</b></label>
+								</div>
+								<div style={radVpStyle} >
+									<input id='radFixed1000000' type='radio' name='rg-vp' defaultChecked={this.state.valuePool === 'radFixed1000000'} onChange={this.onChangeRadVp} />
+									<label><b>&nbsp; Fixed 1000000</b></label>
 								</div>
 								<div style={radVpStyle} >
 									<input id='radRand-10_10' type='radio' name='rg-vp' defaultChecked={this.state.valuePool === 'radRand-10_10'} onChange={this.onChangeRadVp} />
@@ -205,6 +208,14 @@ class GameConfig extends React.Component {
 								<div style={radVpStyle} >
 									<input id='radRand-1000_1000' type='radio' name='rg-vp' defaultChecked={this.state.valuePool === 'radRand-1000_1000'} onChange={this.onChangeRadVp} />
 									<label><b>&nbsp; Random -1000...1000</b></label>
+								</div>
+								<div style={radVpStyle} >
+									<input id='radRand-10000_10000' type='radio' name='rg-vp' defaultChecked={this.state.valuePool === 'radRand-10000_10000'} onChange={this.onChangeRadVp} />
+									<label><b>&nbsp; Random -10000...10000</b></label>
+								</div>
+								<div style={radVpStyle} >
+									<input id='radRand-100000_100000' type='radio' name='rg-vp' defaultChecked={this.state.valuePool === 'radRand-100000_100000'} onChange={this.onChangeRadVp} />
+									<label><b>&nbsp; Random -100000...100000</b></label>
 								</div>
 							</div>
 							</BlackCadre>

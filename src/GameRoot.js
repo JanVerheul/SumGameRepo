@@ -6,17 +6,18 @@ import HallOfFame from './HallOfFame';
 import BlackCadre from './BlackCadre';
 import GameButton from './GameButton';
 import { gameRulesEnglish, gameRulesDutch } from './GameRules';
+//import { CalcTable } from './CalcTable';
+import { minBy } from './Util';
 
 class GameRoot extends React.Component {
 
 	state = {
-		boardSize: '',
+		boardSize: 0,
 		valueColors: false,
 		playingHints: false,
 		noNegatives: false,
 		restrictedMoves: false,
-		addInc: false,
-		subDec: false,
+		moveDirs: 'addIncSubDec',
 		valuePool: '',
 		gameState: 'config',
 		hofList: []
@@ -28,6 +29,7 @@ class GameRoot extends React.Component {
 	};
 
 	onStartGame = (changeObj) => {
+//console.log('onStartGame: ' + JSON.stringify(changeObj));
 		changeObj.gameState = 'playing';
 		this.setState(changeObj);
 	};
@@ -49,36 +51,9 @@ class GameRoot extends React.Component {
 	};
 
 	onGameRules = (rulesLang) => {
+		const myArray = [];
+		myArray.length = 10;
 		this.setState({ gameState: rulesLang });
-	}
-
-	mapBoardSize = (boardSizeId) => {
-		switch (boardSizeId) {
-			case 'rad2x1': return { bsH: 2, bsV: 1, boardType: 'line1d' };
-			case 'rad2x3': return { bsH: 2, bsV: 3, boardType: 'line2d' };
-			case 'rad3x1': return { bsH: 3, bsV: 1, boardType: 'line1d' };
-			case 'rad3x3': return { bsH: 3, bsV: 3, boardType: 'line2d' };
-			case 'rad4x1': return { bsH: 4, bsV: 1, boardType: 'line1d' };
-			case 'rad4x3': return { bsH: 4, bsV: 3, boardType: 'line2d' };
-			case 'rad5x1': return { bsH: 5, bsV: 1, boardType: 'line1d' };
-			case 'rad5x3': return { bsH: 5, bsV: 3, boardType: 'line2d' };
-			default: return { bsH: 0, bsV: 0, boardType: ''};
-		}
-	};
-
-	mapValuePool = (poolId) => {
-		switch (poolId) {
-			case 'radRand1_10': return { lb: 1, ub: 10 };
-			case 'radRand-10_10': return { lb: -10, ub: 10 };
-			case 'radRand-100_100': return { lb: -100, ub: 100 };
-			case 'radRand-1000_1000': return { lb: -1000, ub: 1000 };
-			case 'radFixed0': return { lb: 0, ub: 0 };
-			case 'radFixed10': return { lb: 10, ub: 10 };
-			case 'radFixed100': return { lb: 100, ub: 100 };
-			case 'radFixed1000': return { lb: 1000, ub: 1000};
-			case 'radFixed10000': return { lb: 10000, ub: 10000};
-			default: return { lb: 0, ub: 0 };
-		}
 	}
 
 	mapBoardConfig = () => {
@@ -87,9 +62,8 @@ class GameRoot extends React.Component {
 			playingHints: this.state.playingHints,
 			noNegatives: this.state.noNegatives,
 			restrictedMoves: this.state.restrictedMoves,
-			addInc: this.state.addInc,
-			subDec: this.state.subDec,
-			valuePool: this.mapValuePool(this.state.valuePool)
+			moveDirs: this.state.moveDirs,
+			valuePool: this.state.valuePool
 		};
 	};
 
@@ -121,7 +95,7 @@ class GameRoot extends React.Component {
 		else if (this.state.gameState === 'playing') {
 			return (
 				<GameBoard
-					boardProperties={this.mapBoardSize(this.state.boardSize)}
+					boardSize={this.state.boardSize}
 					boardConfig={this.mapBoardConfig()}
 					onGameOver={this.onGameOver}
 					onStartGame={this.onStartGame}

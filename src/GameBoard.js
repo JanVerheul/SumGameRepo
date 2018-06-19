@@ -3,6 +3,7 @@ import BlackCadre from './BlackCadre';
 import GameCell from './GameCell';
 import ScoreCell from './ScoreCell';
 import GameOverDialog from './GameOverDialog';
+import { HintCalculator } from './HintCalculator';
 import * as Util from './Util';
 
 class GameBoard extends React.Component {
@@ -19,7 +20,7 @@ class GameBoard extends React.Component {
 		const boardProps = this.props.boardProperties;
 		const boardConfig = this.props.boardConfig;
 		const nextCells = Util.computeChange(JSON.parse(JSON.stringify(this.state.cells)), cellIndex, direction);
-		const hint = (boardConfig.playingHints ? Util.calcHint(nextCells, boardProps.bsH, boardProps.boardType) : {});
+		const hint = (boardConfig.playingHints ? this.hintCalculator.calcHint(nextCells) : {});
 		this.setState({
 			cells: nextCells,
 			numMoves: this.state.numMoves + 1,
@@ -42,18 +43,20 @@ class GameBoard extends React.Component {
 	handleRegisterScore = () => { this.props.onGameOver({ numMoves: this.state.numMoves, playingTime: this.state.playingTime }); };
 
 	startNewGame = () => {
-		const boardProps = this.props.boardProperties;
+		const boardSize = this.props.boardSize;
 		const boardConfig = this.props.boardConfig;
-		const cells = Util.generateCells(boardProps.bsH * boardProps.bsV, boardConfig.valuePool, boardConfig.noNegatives);
-		const hint = (boardConfig.playingHints ? Util.calcHint(cells, boardProps.bsH, boardProps.boardType) : {});
+		const moveDirs = (boardConfig.restrictedMoves ? boardConfig.moveDirs : 'all');
+		const cells = Util.generateCells(boardSize, boardConfig.valuePool, boardConfig.noNegatives);
+		this.hintCalculator = new HintCalculator(boardSize, moveDirs);
+		const hint = (boardConfig.playingHints ? this.hintCalculator.calcHint(cells) : {});
 		this.setState({ cells: cells, numMoves: 0, playingTime: 0, gameOver: false, hint: hint });
 		this.timerInterval = setInterval(() => this.handleClockTick(), 1000);
 	};
 
 	render() {
-		const boardProps = this.props.boardProperties;
+		const boardSize = this.props.boardSize;
 		const boardConfig = this.props.boardConfig;
-		const boardSizePixH = 16 + boardProps.bsH * 196;
+		const boardSizePixH = 16 + boardSize * 196;
 		const cadreWidth = Math.max(600, boardSizePixH + 50);
 		const boardStyle = {
 			textAlign: 'center',
@@ -77,11 +80,9 @@ class GameBoard extends React.Component {
 				value={cellValue}
 				restrictedMoves={boardConfig.restrictedMoves}
 				negativesGuard={boardConfig.noNegatives ? negativesGuardList[index] : {}}
-				addInc={boardConfig.addInc}
-				subDec={boardConfig.subDec}
+				moveDirs={boardConfig.moveDirs}
 				hint={this.state.hint}
 				gameOver={this.state.gameOver}
-				type={boardProps.boardType}
 				valueColors={boardConfig.valueColors}
 				handleClick={this.handleSumCommand}
 			/>

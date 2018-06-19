@@ -29,7 +29,6 @@ class GameRoot extends React.Component {
 	};
 
 	onStartGame = (changeObj) => {
-//console.log('onStartGame: ' + JSON.stringify(changeObj));
 		changeObj.gameState = 'playing';
 		this.setState(changeObj);
 	};

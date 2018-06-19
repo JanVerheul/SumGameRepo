@@ -11,13 +11,6 @@ export function CalcTable(boardSize, moveDirs, depth) {
     this.processTable(boardSize, moveDirs, depth);
 };
 
-// const revDirs = {
-//     addInc: 'decSub',
-//     subDec: 'incAdd',
-//     incAdd: 'subDec',
-//     decSub: 'addInc'
-// };
-
 CalcTable.prototype = {
     constructor: CalcTable,
     processTable: function(boardSize, moveDirs, depth) {
@@ -42,19 +35,6 @@ CalcTable.prototype = {
             this.table = newTable;
         }
     },
-    // numEntries: function(dist) {
-    //     let result = 0;
-    //     for (let prop in this.table) {
-    //         if (this.table[prop].absLargest() <= dist) result += 1;
-    //     }
-    //     return result;
-    // },
-    // getTable: function() {
-    //     return this.table;
-    // },
-    // getBoardSize: function() {
-    //     return this.boardSize;
-    // }
 };
 
 const initArray = (boardSize) => {

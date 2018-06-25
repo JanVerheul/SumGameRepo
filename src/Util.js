@@ -1,7 +1,3 @@
-// import { PlaySeq } from './PlaySeq';
-// import { CalcTable } from './CalcTable';
-// import { SList } from './SList';
-
 
 ///////////////////////////////////////////
 // function for computing cell opertions //
@@ -49,11 +45,10 @@ const generateCellNumber = ({ lb, ub }) => ((lb === ub ? lb : lb + Math.floor(Ma
 
 const fixedValues = [559, 807, 624, 635, 0, 0]; // for testing and experimenting purposes
 
+const initialValues = [[], [0], [0, 0], [0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0]];
+
 export const generateCells = (number, valuePool, noNegatives) => {
-	let res = [];
-	res.length = number;
-	res.fill(0);
-	//if (true) { //valuePool.lb === 0) {
+	let res = initialValues[number];
 	if (valuePool.lb === 0) {
 		res = res.map((dummy, index) => fixedValues[index]);
 	}

@@ -1,7 +1,7 @@
 import { PlaySeq } from './PlaySeq';
 
 export function CalcTable(boardSize, moveDirs, depth) {
-    const rootPlaySeq = new PlaySeq(initArray(boardSize));
+    const rootPlaySeq = new PlaySeq(initialValues[boardSize]);
     rootPlaySeq.minSteps = 0;
     rootPlaySeq.processed = false;
     const key = rootPlaySeq.toKey();
@@ -37,8 +37,4 @@ CalcTable.prototype = {
     },
 };
 
-const initArray = (boardSize) => {
-    let result = [];
-    result.length = boardSize;
-    return result.fill(0);
-}
+const initialValues = [[], [0], [0, 0], [0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0]];
